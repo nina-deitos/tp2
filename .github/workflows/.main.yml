@@ -2,7 +2,9 @@ name: CI devops 2021 EPF
 on:
 #to begin you want to launch this job in main and develop
   push:
-    branches: main
+    branches: 
+    - main
+    - develop
   pull_request:
 jobs:
   build-and-test-app:
@@ -18,7 +20,7 @@ jobs:
         
   # define job to build and publish docker image
   build-and-push-docker-image:
-    needs: build-and-test-backend
+    needs: build-and-test-app
   # run only when code is compiling and tests are passing
     runs-on: ubuntu-latest
   
@@ -33,11 +35,17 @@ jobs:
         # relative path to the place where source code with Dockerfile is located
          context: ./simple-api
         # Note: tags has to be all lower-case
-         tags:
-${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf:simple-api
+         tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf:simple-api
 
       - name: Build image and push database
       # DO the same for database
-
+        uses: docker/build-push-action@v2
+        with:
+         context: ./database
+         tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf:database
       - name: Build image and push httpd
       # DO the same for httpd
+        uses: docker/build-push-action@v2
+        with:
+         context: ./httpd
+         tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-epf:httpd
