@@ -18,6 +18,7 @@ jobs:
       - name: Build and test with Maven
         env:
          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN }}
+         SONAR_TOKEN: ${{secrets.SONAR_TOKEN }}
         run: mvn -B verify sonar:sonar -Dsonar.nina-deitos_tp2-Dsonar.organization=nina-deitos-Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{secrets.SONAR_TOKEN }} --file ./simple-api/pom.xml
 
         
