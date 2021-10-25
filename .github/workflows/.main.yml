@@ -19,7 +19,7 @@ jobs:
         run: mvn -B verify sonar:sonar -Dsonar.nina-deitos_tp2-Dsonar.organization=nina-deitos-Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{secrets.SONAR_TOKEN }} --file ./simple-api/pom.xml
 
         
-  # define job to build and publish docker image
+  # define job to build and publish docker image.
   build-and-push-docker-image:
     needs: build-and-test-app
   # run only when code is compiling and tests are passing
